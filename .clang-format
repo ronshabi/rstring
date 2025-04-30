@@ -1,0 +1,20 @@
+BasedOnStyle: Microsoft
+
+ColumnLimit: 80
+TabWidth: 4
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+LineEnding: LF
+MaxEmptyLinesToKeep: 1
+
+AlignAfterOpenBracket: true
+AlignOperands: true
+AlignConsecutiveMacros: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveBitFields: true
+AlignConsecutiveDeclarations: true
+AlignTrailingComments: true
+PointerAlignment: Right
+QualifierAlignment: Left
+ReferenceAlignment: Left
