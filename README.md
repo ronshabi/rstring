@@ -1,0 +1,1 @@
+# RString: a low-footprint dynamic string library for C
