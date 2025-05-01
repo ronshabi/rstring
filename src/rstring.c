@@ -12,12 +12,10 @@
 /* malloc, realloc */
 #include <stdlib.h>
 
-
 #define RSTRING_INITIAL_CAPACITY 8
 
 /* Sentinel empty buffer */
 char _rstring_empty[1];
-
 
 /*----------------------------------------------------------------------------*/
 /* INTERNAL MACROS                                                            */
@@ -36,39 +34,43 @@ char _rstring_empty[1];
         }                                                                      \
     } while (0)
 
-
-    
 void rstring_init(struct rstring *rs)
 {
     rs->len           = 0;
-    rs->cap           = 0;
     rs->data          = _rstring_empty;
+    rs->cap           = 0;
     _rstring_empty[0] = '\0';
 }
 
-rstring_status_t
-rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
+rstring_status_t rstring_ensure_capacity(struct rstring *rs,
+                                         const size_t    wanted_cap)
 {
-    size_t new_size = rs->cap < RSTRING_INITIAL_CAPACITY ? RSTRING_INITIAL_CAPACITY : rs->cap;
+    size_t new_size =
+        rs->cap < RSTRING_INITIAL_CAPACITY ? RSTRING_INITIAL_CAPACITY : rs->cap;
 
     char *p = NULL;
 
     /* Grow by 1.5 */
-    while (new_size < wanted_cap) {
+    while (new_size < wanted_cap)
+    {
         new_size = (new_size * 3) / 2;
     }
 
-    if (rs->cap == 0) {
+    if (rs->cap == 0)
+    {
         p = malloc(new_size);
-    } else {
+    }
+    else
+    {
         p = realloc(rs->data, new_size);
     }
 
-    if (!p) {
+    if (!p)
+    {
         return RSTRING_ERROR_ALLOC;
     }
 
-    rs->cap = new_size;
+    rs->cap  = new_size;
     rs->data = p;
 
     return RSTRING_OK;
@@ -80,9 +82,8 @@ rstring_status_t rstring_push_byte(struct rstring *rs, uint8_t byte)
 
     ENSURE_CAPACITY(rs, new_length + 1);
 
-    ((uint8_t *) rs->data)[rs->len] = byte;
-    rs->len                         = new_length;
-    rs->data[rs->len]               = '\0';
+    ((uint8_t *)rs->data)[rs->len] = byte;
+    rs->len                        = new_length;
+    rs->data[rs->len]              = '\0';
     return RSTRING_OK;
-
 }
