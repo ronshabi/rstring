@@ -15,6 +15,14 @@ struct rstring
     char  *data;
 };
 
+enum
+{
+    RSTRING_OK = 0,
+    RSTRING_ERROR_ALLOC
+};
+
+typedef size_t rstring_status_t;
+
 void rstring_init(struct rstring *rs);
 
 #endif /* RSTRING_H */
