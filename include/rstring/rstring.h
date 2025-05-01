@@ -25,4 +25,7 @@ typedef size_t rstring_status_t;
 
 void rstring_init(struct rstring *rs);
 
+rstring_status_t rstring_ensure_capacity(struct rstring *rs,
+                                         const size_t    wanted_cap)
+
 #endif /* RSTRING_H */
