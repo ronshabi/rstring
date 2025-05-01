@@ -18,8 +18,27 @@
 /* Sentinel empty buffer */
 char _rstring_empty[1];
 
-void
-rstring_init(struct rstring *rs)
+
+/*----------------------------------------------------------------------------*/
+/* INTERNAL MACROS                                                            */
+/*----------------------------------------------------------------------------*/
+
+#define ENSURE_CAPACITY(rs, newcap)                                            \
+    do                                                                         \
+    {                                                                          \
+        if (newcap >= rs->cap)                                                 \
+        {                                                                      \
+            rstring_status_t __temp_rc = rstring_ensure_capacity(rs, newcap);  \
+            if (__temp_rc != RSTRING_OK)                                       \
+            {                                                                  \
+                return __temp_rc;                                              \
+            }                                                                  \
+        }                                                                      \
+    } while (0)
+
+
+    
+void rstring_init(struct rstring *rs)
 {
     rs->len           = 0;
     rs->cap           = 0;
