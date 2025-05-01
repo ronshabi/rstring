@@ -8,6 +8,10 @@ KeepEmptyLines:
 LineEnding: LF
 MaxEmptyLinesToKeep: 1
 
+
+# ------------------------------------------------------------------------------
+# ALIGNMENT
+# ------------------------------------------------------------------------------
 AlignAfterOpenBracket: true
 AlignOperands: true
 AlignConsecutiveMacros: true
@@ -18,3 +22,79 @@ AlignTrailingComments: true
 PointerAlignment: Right
 QualifierAlignment: Left
 ReferenceAlignment: Left
+
+# ------------------------------------------------------------------------------
+# SPACES
+# ------------------------------------------------------------------------------
+SpaceAfterCStyleCast: true
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: false
+SpaceAroundPointerQualifiers: After
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatementsExceptControlMacros
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpacesBeforeTrailingComments: 4
+SpacesInLineCommentPrefix: 
+  Minimum: 1
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+InsertNewlineAtEOF: true
+
+# ------------------------------------------------------------------------------
+# BREAKAGE
+# ------------------------------------------------------------------------------
+BreakBeforeBraces: Allman
+BreakBeforeInlineASMColon: Always
+BreakAfterReturnType: All
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+BreakStringLiterals: true
+BreakTemplateDeclarations: Yes
+CompactNamespaces: false
+
+# ------------------------------------------------------------------------------
+# INDENTATION
+# ------------------------------------------------------------------------------
+IndentGotoLabels: false
+IndentPPDirectives: AfterHash
+IndentRequiresClause: true
+IndentWidth: 4
+IndentWrappedFunctionNames: false
+NamespaceIndentation: None
+
+# ------------------------------------------------------------------------------
+# INCLUDE SORTING
+# ------------------------------------------------------------------------------
+
+# <stdio.h>
+# <stdlib.h>
+# standard library headers
+# system headers
+# third party headers
+# user headers
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:        '^<stdio\.h>'
+    Priority:     1
+    SortPriority: 0
+  - Regex:        '^<stdlib\.h>'
+    Priority:     1
+    SortPriority: 1
+  - Regex:        '^<[0-9A-Za-z]+(\..+)?>'
+    Priority:     3
+    SortPriority: 2
+  - Regex:        '^<[[:alnum:]].+(\..+)?>'
+    Priority:     4
+    SortPriority: 3
+  - Regex:        '^".+"'
+    Priority:     5
+  - Regex:        '.*'
+  - Priority:     6
+
+# ------------------------------------------------------------------------------
+# PREPROC
+# ------------------------------------------------------------------------------
+SeparateDefinitionBlocks: Always
