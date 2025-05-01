@@ -7,9 +7,9 @@
  * Subroutines related to the 'rstring' data structure.
  */
 
-#include <rstring/rstring.h>
-
 #include <stdlib.h> /* malloc, realloc */
+
+#include <rstring/rstring.h>
 
 /*----------------------------------------------------------------------------*/
 /* STATIC BUFFERS                                                             */
@@ -44,7 +44,8 @@ char _rstring_empty[1];
 /* PUBLIC FUNCTIONS */
 /*----------------------------------------------------------------------------*/
 
-void rstring_init(struct rstring *rs)
+void
+rstring_init(struct rstring *rs)
 {
     rs->len           = 0;
     rs->data          = _rstring_empty;
@@ -52,8 +53,8 @@ void rstring_init(struct rstring *rs)
     _rstring_empty[0] = '\0';
 }
 
-rstring_status_t rstring_ensure_capacity(struct rstring *rs,
-                                         const size_t    wanted_cap)
+rstring_status_t
+rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
 {
     size_t new_size =
         rs->cap < RSTRING_INITIAL_CAPACITY ? RSTRING_INITIAL_CAPACITY : rs->cap;
@@ -86,14 +87,15 @@ rstring_status_t rstring_ensure_capacity(struct rstring *rs,
     return RSTRING_OK;
 }
 
-rstring_status_t rstring_push_byte(struct rstring *rs, uint8_t byte)
+rstring_status_t
+rstring_push_byte(struct rstring *rs, uint8_t byte)
 {
     const size_t new_length = rs->len + 1;
 
     ENSURE_CAPACITY(rs, new_length + 1);
 
-    ((uint8_t *)rs->data)[rs->len] = byte;
-    rs->len                        = new_length;
-    rs->data[rs->len]              = '\0';
+    ((uint8_t *) rs->data)[rs->len] = byte;
+    rs->len                         = new_length;
+    rs->data[rs->len]               = '\0';
     return RSTRING_OK;
 }
