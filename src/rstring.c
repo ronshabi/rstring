@@ -73,3 +73,16 @@ rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
 
     return RSTRING_OK;
 }
+
+rstring_status_t rstring_push_byte(struct rstring *rs, uint8_t byte)
+{
+    const size_t new_length = rs->len + 1;
+
+    ENSURE_CAPACITY(rs, new_length + 1);
+
+    ((uint8_t *) rs->data)[rs->len] = byte;
+    rs->len                         = new_length;
+    rs->data[rs->len]               = '\0';
+    return RSTRING_OK;
+
+}
