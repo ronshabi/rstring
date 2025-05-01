@@ -9,10 +9,11 @@
 
 #include <rstring/rstring.h>
 
-/* malloc, realloc */
-#include <stdlib.h>
+#include <stdlib.h> /* malloc, realloc */
 
-#define RSTRING_INITIAL_CAPACITY 8
+/*----------------------------------------------------------------------------*/
+/* STATIC BUFFERS                                                             */
+/*----------------------------------------------------------------------------*/
 
 /* Sentinel empty buffer */
 char _rstring_empty[1];
@@ -20,7 +21,12 @@ char _rstring_empty[1];
 /*----------------------------------------------------------------------------*/
 /* INTERNAL MACROS                                                            */
 /*----------------------------------------------------------------------------*/
+#define RSTRING_INITIAL_CAPACITY 8
 
+/*
+ * Only call ensure_capacity when needed, because calling ensure_capacity
+ * triggers either a malloc or a realloc, which is expensive.
+ */
 #define ENSURE_CAPACITY(rs, newcap)                                            \
     do                                                                         \
     {                                                                          \
@@ -33,6 +39,10 @@ char _rstring_empty[1];
             }                                                                  \
         }                                                                      \
     } while (0)
+
+/*----------------------------------------------------------------------------*/
+/* PUBLIC FUNCTIONS */
+/*----------------------------------------------------------------------------*/
 
 void rstring_init(struct rstring *rs)
 {
