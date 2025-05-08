@@ -8,6 +8,7 @@
  */
 
 #include <stdlib.h> /* malloc, realloc */
+
 #include <string.h> /* strlen, memcpy */
 
 #include <rstring/rstring.h>
@@ -103,6 +104,12 @@ rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
     rs->data = p;
 
     return RSTRING_OK;
+}
+
+rstring_status_t
+rstring_push(struct rstring *dest, const struct rstring *src)
+{
+    return rstring_internal_push(dest, src->data, src->len);
 }
 
 rstring_status_t

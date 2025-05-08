@@ -28,6 +28,9 @@ void
 rstring_init(struct rstring *rs);
 
 rstring_status_t
+rstring_push(struct rstring *dest, const struct rstring *src);
+
+rstring_status_t
 rstring_push_byte(struct rstring *rs, uint8_t byte);
 
 rstring_status_t
@@ -38,6 +41,5 @@ rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap);
 
 void
 rstring_free(struct rstring *rs);
-
 
 #endif /* RSTRING_H */
