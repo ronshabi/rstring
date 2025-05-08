@@ -41,6 +41,17 @@ rstring_push_str(struct rstring *rs, const char *str);
 rstring_status_t
 rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap);
 
+static inline int
+rstring_cmp(const struct rstring *rs1, const struct rstring *rs2)
+{
+    if (rs1->len != rs2->len)
+    {
+        return 0;
+    }
+
+    return memcmp(rs1->data, rs2->data, rs1->len);
+}
+
 void
 rstring_free(struct rstring *rs);
 
