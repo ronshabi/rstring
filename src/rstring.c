@@ -118,6 +118,12 @@ rstring_push_byte(struct rstring *rs, uint8_t byte)
     return RSTRING_OK;
 }
 
+rstring_status_t
+rstring_push_str(struct rstring *rs, const char *str)
+{
+    return rstring_internal_push(rs, str, strlen(str));
+}
+
 void
 rstring_free(struct rstring *rs)
 {

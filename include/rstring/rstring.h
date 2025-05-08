@@ -31,6 +31,9 @@ rstring_status_t
 rstring_push_byte(struct rstring *rs, uint8_t byte);
 
 rstring_status_t
+rstring_push_str(struct rstring *rs, const char *str);
+
+rstring_status_t
 rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap);
 
 void
