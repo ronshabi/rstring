@@ -6,8 +6,10 @@
 #ifndef RSTRING_H
 #define RSTRING_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <stdbool.h> /* bool, true, false */
+#include <stddef.h>  /* size_t */
+#include <stdint.h>  /* uint8_t */
+#include <string.h>  /* memcmp */
 
 struct rstring
 {
