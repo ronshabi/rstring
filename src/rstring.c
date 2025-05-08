@@ -49,12 +49,15 @@ char _rstring_empty[1];
 static rstring_status_t
 rstring_internal_push(struct rstring *dest, const char *src, size_t n)
 {
-    if (n == 0) { return RSTRING_OK; }
+    if (n == 0)
+    {
+        return RSTRING_OK;
+    }
 
     const size_t new_length = dest->len + n;
-    ENSURE_CAPACITY(dest, new_length + 1); // Add one for nullterm
+    ENSURE_CAPACITY(dest, new_length + 1);    // Add one for nullterm
     memcpy(dest->data + dest->len, src, n);
-    dest->len = new_length;
+    dest->len              = new_length;
     dest->data[new_length] = '\0';
     return RSTRING_OK;
 }
