@@ -10,6 +10,7 @@
 #include <stddef.h>  /* size_t */
 #include <stdint.h>  /* uint8_t */
 #include <string.h>  /* memcmp */
+#include <strings.h> /* strcasecmp */
 
 struct rstring
 {
@@ -51,6 +52,18 @@ static inline int
 rstring_cmp_str(const struct rstring *rs, const char *str)
 {
     return strcmp(rs->data, str);
+}
+
+static inline int
+rstring_cmp_ignore_case(const struct rstring *rs1, const struct rstring *rs2)
+{
+    return strcasecmp(rs1->data, rs2->data);
+}
+
+static inline int
+rstring_cmp_str_ignore_case(const struct rstring *rs, const char *str)
+{
+    return strcasecmp(rs->data, str);
 }
 
 void
