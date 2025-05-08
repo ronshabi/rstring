@@ -52,6 +52,12 @@ rstring_cmp(const struct rstring *rs1, const struct rstring *rs2)
     return memcmp(rs1->data, rs2->data, rs1->len);
 }
 
+static inline int
+rstring_cmp_str(const struct rstring *rs, const char *str)
+{
+    return strcmp(rs->data, str);
+}
+
 void
 rstring_free(struct rstring *rs);
 
