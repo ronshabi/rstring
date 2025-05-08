@@ -99,3 +99,16 @@ rstring_push_byte(struct rstring *rs, uint8_t byte)
     rs->data[rs->len]               = '\0';
     return RSTRING_OK;
 }
+
+void
+rstring_free(struct rstring *rs)
+{
+    if (rs->cap != 0)
+    {
+        free(rs->data);
+    }
+
+    rs->len  = 0;
+    rs->cap  = 0;
+    rs->data = _rstring_empty;
+}
