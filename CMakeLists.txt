@@ -21,3 +21,7 @@ enable_testing()
 add_executable(t1-simple-usage "test/t1-simple-usage.c")
 target_link_libraries(t1-simple-usage PRIVATE rstring)
 add_test(NAME t1-simple-usage COMMAND t1-simple-usage)
+
+add_executable(t2-find "test/t2-find.c")
+target_link_libraries(t2-find PRIVATE rstring)
+add_test(NAME t2-find COMMAND t2-find)
