@@ -66,6 +66,40 @@ rstring_cmp_str_ignore_case(const struct rstring *rs, const char *str)
     return strcasecmp(rs->data, str);
 }
 
+static inline bool
+rstring_equals(const struct rstring *rs1, const struct rstring *rs2)
+{
+    if (rs1->len != rs2->len)
+    {
+        return false;
+    }
+
+    return rstring_cmp(rs1, rs2) == 0;
+}
+
+static inline bool
+rstring_equals_str(const struct rstring *rs, const char *str)
+{
+    return rstring_cmp_str(rs, str) == 0;
+}
+
+static inline bool
+rstring_equals_ignore_case(const struct rstring *rs1, const struct rstring *rs2)
+{
+    if (rs1->len != rs2->len)
+    {
+        return false;
+    }
+
+    return rstring_cmp_ignore_case(rs1, rs2) == 0;
+}
+
+static inline bool
+rstring_equals_str_ignore_case(const struct rstring *rs, const char *str)
+{
+    return rstring_cmp_str_ignore_case(rs, str) == 0;
+}
+
 void
 rstring_free(struct rstring *rs);
 
