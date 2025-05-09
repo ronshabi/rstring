@@ -36,6 +36,14 @@ void find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t res
     rstring_free(&rs);
 }
 
+void find_last_byte_test(const char *str, uint8_t byte, size_t result)
+{
+    struct rstring rs = init_test(__FUNCTION__, str);
+
+    size_t given_result = rstring_find_last_byte(&rs, byte);
+
+    if (result != given_result) {
+        printf("Test find_last_byte_test failed:\n"
             "In string '%s', find byte 0x%02x\n"
             "Result: %zu\n"
             "Expected: %zu\n", str, byte, given_result, result);
@@ -58,6 +66,10 @@ int main()
     find_first_byte_test(" aaa ", ' ', 3, 4);
     find_first_byte_test(" aaa ", 'a', 50, RSTRING_NOT_FOUND);
     find_first_byte_test(" aaa ", '?', 0, RSTRING_NOT_FOUND);
+
+    find_last_byte_test("", 0x00, RSTRING_NOT_FOUND);
+    find_last_byte_test(" ", 0x00, RSTRING_NOT_FOUND);
+    find_last_byte_test(" ", ' ', 0);
 
     return 0;
 }
