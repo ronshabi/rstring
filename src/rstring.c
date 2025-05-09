@@ -154,7 +154,7 @@ rstring_find_last_byte(const struct rstring *rs, uint8_t byte)
 
     if (rs->len == 0)
     {
-        return 0;
+        return RSTRING_NOT_FOUND;
     }
 
     if (rs->len == 1)
