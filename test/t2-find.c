@@ -70,6 +70,9 @@ int main()
     find_last_byte_test("", 0x00, RSTRING_NOT_FOUND);
     find_last_byte_test(" ", 0x00, RSTRING_NOT_FOUND);
     find_last_byte_test(" ", ' ', 0);
+    find_last_byte_test(" abc", 'a', 1);
+    find_last_byte_test(" \x80\x90\xFC\x10\x20\xFC", '\xFC', 6);
+    find_last_byte_test(" \x80\x90\xFC\x10\x20\xFC", '\x20', 5);
 
     return 0;
 }
