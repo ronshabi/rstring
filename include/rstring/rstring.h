@@ -100,6 +100,17 @@ rstring_equals_str_ignore_case(const struct rstring *rs, const char *str)
     return rstring_cmp_str_ignore_case(rs, str) == 0;
 }
 
+inline void
+rstring_clear(struct rstring *rs)
+{
+    if (rs->cap)
+    {
+        rs->data[0] = '\0';
+    }
+
+    rs->len = 0;
+}
+
 void
 rstring_free(struct rstring *rs);
 
