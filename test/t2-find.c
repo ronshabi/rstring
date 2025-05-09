@@ -3,15 +3,17 @@
 
 #include <rstring/rstring.h>
 
-struct rstring init_test(const char *test_name, const char *str)
+struct rstring
+init_test(const char *test_name, const char *str)
 {
-    struct rstring rs;
+    struct rstring   rs;
     rstring_status_t rc;
 
     rstring_init(&rs);
     rc = rstring_push_str(&rs, str);
 
-    if (rc != RSTRING_OK) {
+    if (rc != RSTRING_OK)
+    {
         printf("Test '%s' failed: can't push string '%s'\n", test_name, str);
         exit(1);
     }
@@ -19,41 +21,48 @@ struct rstring init_test(const char *test_name, const char *str)
     return rs;
 }
 
-void find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t result)
+void
+find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t result)
 {
     struct rstring rs = init_test(__FUNCTION__, str);
 
     size_t given_result = rstring_find_first_byte(&rs, byte, from);
 
-    if (result != given_result) {
+    if (result != given_result)
+    {
         printf("Test find_first_byte_test failed:\n"
-            "In string '%s', find byte 0x%02x, from offset %zu\n"
-            "Result: %zu\n"
-            "Expected: %zu\n", str, byte, from, given_result, result);
+               "In string '%s', find byte 0x%02x, from offset %zu\n"
+               "Result: %zu\n"
+               "Expected: %zu\n",
+               str, byte, from, given_result, result);
         exit(1);
     }
 
     rstring_free(&rs);
 }
 
-void find_last_byte_test(const char *str, uint8_t byte, size_t result)
+void
+find_last_byte_test(const char *str, uint8_t byte, size_t result)
 {
     struct rstring rs = init_test(__FUNCTION__, str);
 
     size_t given_result = rstring_find_last_byte(&rs, byte);
 
-    if (result != given_result) {
+    if (result != given_result)
+    {
         printf("Test find_last_byte_test failed:\n"
-            "In string '%s', find byte 0x%02x\n"
-            "Result: %zu\n"
-            "Expected: %zu\n", str, byte, given_result, result);
+               "In string '%s', find byte 0x%02x\n"
+               "Result: %zu\n"
+               "Expected: %zu\n",
+               str, byte, given_result, result);
         exit(1);
     }
 
     rstring_free(&rs);
 }
 
-int main()
+int
+main()
 {
     find_first_byte_test("", 0x00, 0, RSTRING_NOT_FOUND);
     find_first_byte_test(" ", 0x00, 0, RSTRING_NOT_FOUND);

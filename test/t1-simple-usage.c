@@ -25,15 +25,14 @@ main()
     rstring_init(&y);
     rstring_push_str(&y, "hello world!");
 
-    if (rstring_cmp(&x, &y) != 0) {
+    if (rstring_cmp(&x, &y) != 0)
+    {
         printf("comparison should have returned 0\n");
         exit(1);
     }
 
-
     rstring_free(&x);
     rstring_free(&y);
-
 
     return 0;
 }
