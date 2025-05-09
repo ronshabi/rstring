@@ -111,6 +111,12 @@ rstring_clear(struct rstring *rs)
     rs->len = 0;
 }
 
+inline bool
+rstring_is_empty(const struct rstring *rs)
+{
+    return rs->len == 0;
+}
+
 void
 rstring_free(struct rstring *rs);
 
