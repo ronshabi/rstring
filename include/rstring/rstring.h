@@ -118,6 +118,10 @@ rstring_find_first_byte(const struct rstring *rs, uint8_t byte, size_t from)
 size_t
 rstring_find_last_byte(const struct rstring *rs, uint8_t byte);
 
+size_t
+rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
+                   size_t from);
+
 inline void
 rstring_clear(struct rstring *rs)
 {

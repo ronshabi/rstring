@@ -9,7 +9,8 @@
 
 #include <stdlib.h> /* malloc, realloc */
 
-#include <string.h> /* strlen, memcpy */
+#include <string.h>  /* strlen, memcpy */
+#include <strings.h> /* strncasecmp*/
 
 #include <rstring/rstring.h>
 
@@ -60,6 +61,45 @@ rstring_internal_push(struct rstring *dest, const char *src, size_t n)
     dest->len              = new_length;
     dest->data[new_length] = '\0';
     return RSTRING_OK;
+}
+
+static int
+rstring_internal_compare(const char *s1, const char *s2, size_t n,
+                         bool ignore_case)
+{
+    if (ignore_case)
+    {
+        return strncasecmp(s1, s2, n);
+    }
+
+    return memcmp(s1, s2, n);
+}
+
+static size_t
+rstring_internal_find_first(const char *haystack, const char *needle,
+                            size_t haystack_len, size_t needle_len, size_t from,
+                            bool ignore_case)
+{
+    if (needle_len + from > haystack_len)
+    {
+        return RSTRING_NOT_FOUND;
+    }
+
+    if (haystack_len == 0 || needle_len == 0)
+    {
+        return 0;
+    }
+
+    for (size_t i = from; i + needle_len <= haystack_len; ++i)
+    {
+        if (rstring_internal_compare(haystack + i, needle, needle_len,
+                                     ignore_case))
+        {
+            return i;
+        }
+    }
+
+    return RSTRING_NOT_FOUND;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -176,4 +216,12 @@ rstring_find_last_byte(const struct rstring *rs, uint8_t byte)
     }
 
     return RSTRING_NOT_FOUND;
+}
+
+size_t
+rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
+                   size_t from)
+{
+    return rstring_internal_find_first(haystack->data, needle->data,
+                                       haystack->len, needle->len, from, false);
 }
