@@ -3,7 +3,7 @@
 
 #include <rstring/rstring.h>
 
-void find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t result)
+struct rstring init_test(const char *test_name, const char *str)
 {
     struct rstring rs;
     rstring_status_t rc;
@@ -12,14 +12,30 @@ void find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t res
     rc = rstring_push_str(&rs, str);
 
     if (rc != RSTRING_OK) {
-        printf("Test find_first_byte_test failed: can't push string '%s'\n", str);
+        printf("Test '%s' failed: can't push string '%s'\n", test_name, str);
         exit(1);
     }
+
+    return rs;
+}
+
+void find_first_byte_test(const char *str, uint8_t byte, size_t from, size_t result)
+{
+    struct rstring rs = init_test(__FUNCTION__, str);
 
     size_t given_result = rstring_find_first_byte(&rs, byte, from);
 
     if (result != given_result) {
         printf("Test find_first_byte_test failed:\n"
+            "In string '%s', find byte 0x%02x, from offset %zu\n"
+            "Result: %zu\n"
+            "Expected: %zu\n", str, byte, from, given_result, result);
+        exit(1);
+    }
+
+    rstring_free(&rs);
+}
+
             "In string '%s', find byte 0x%02x\n"
             "Result: %zu\n"
             "Expected: %zu\n", str, byte, given_result, result);
