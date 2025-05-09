@@ -225,3 +225,11 @@ rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
     return rstring_internal_find_first(haystack->data, needle->data,
                                        haystack->len, needle->len, from, false);
 }
+
+size_t
+rstring_find_first_str(const struct rstring *haystack, const char *needle,
+                       size_t from)
+{
+    return rstring_internal_find_first(haystack->data, needle, haystack->len,
+                                       strlen(needle), from, false);
+}
