@@ -1,0 +1,18 @@
+---
+Checks:
+  - 'bugprone-*'
+  - 'cert-*-c'
+  - 'concurrency-*'
+  - 'misc-*'
+  - 'modernize-*'
+  - 'performance-*'
+  - 'readability-*'
+  - '-readability-identifier-length' # Some functions have long names
+HeaderFileExtensions:
+  - h
+ImplementationFileExtensions:
+  - c
+FormatStyle: file
+SystemHeaders: false
+UseColor: true
+---
