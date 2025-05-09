@@ -126,6 +126,14 @@ size_t
 rstring_find_first_str(const struct rstring *haystack, const char *needle,
                        size_t from);
 
+size_t
+rstring_find_first_ignore_case(const struct rstring *haystack,
+                               const struct rstring *needle, size_t from);
+
+size_t
+rstring_find_first_str_ignore_case(const struct rstring *haystack,
+                                   const char *needle, size_t from);
+
 inline void
 rstring_clear(struct rstring *rs)
 {
