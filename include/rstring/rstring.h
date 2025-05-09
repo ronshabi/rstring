@@ -19,11 +19,9 @@ struct rstring
     char  *data;
 };
 
-enum
-{
-    RSTRING_OK = 0,
-    RSTRING_ERROR_ALLOC
-};
+#define RSTRING_OK          0
+#define RSTRING_ERROR_ALLOC 1
+#define RSTRING_NOT_FOUND   (SIZE_MAX)
 
 typedef size_t rstring_status_t;
 
@@ -98,6 +96,23 @@ static inline bool
 rstring_equals_str_ignore_case(const struct rstring *rs, const char *str)
 {
     return rstring_cmp_str_ignore_case(rs, str) == 0;
+}
+
+static inline size_t
+rstring_find_first_byte(const struct rstring *rs, uint8_t byte, size_t from)
+{
+    if (from >= rs->len)
+    {
+        return RSTRING_NOT_FOUND;
+    }
+
+    const char *p = memchr(rs->data + from, byte, rs->len - from);
+    if (p == NULL)
+    {
+        return RSTRING_NOT_FOUND;
+    }
+
+    return p - rs->data;
 }
 
 inline void
