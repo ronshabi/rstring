@@ -115,6 +115,9 @@ rstring_find_first_byte(const struct rstring *rs, uint8_t byte, size_t from)
     return p - rs->data;
 }
 
+size_t
+rstring_find_last_byte(const struct rstring *rs, uint8_t byte);
+
 inline void
 rstring_clear(struct rstring *rs)
 {

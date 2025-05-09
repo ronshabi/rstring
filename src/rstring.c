@@ -146,3 +146,34 @@ rstring_free(struct rstring *rs)
     rs->cap  = 0;
     rs->data = _rstring_empty;
 }
+
+size_t
+rstring_find_last_byte(const struct rstring *rs, uint8_t byte)
+{
+    const uint8_t *p = (uint8_t *) rs->data;
+
+    if (rs->len == 0)
+    {
+        return 0;
+    }
+
+    if (rs->len == 1)
+    {
+        return (p[0] == byte) ? 0 : RSTRING_NOT_FOUND;
+    }
+
+    for (size_t i = rs->len - 1; i != 0; --i)
+    {
+        if (p[i] == byte)
+        {
+            return i;
+        }
+    }
+
+    if (p[0] == byte)
+    {
+        return 0;
+    }
+
+    return RSTRING_NOT_FOUND;
+}
