@@ -7,6 +7,7 @@ project(RString)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 set(CMAKE_COLOR_MAKEFILE ON)
+set(CMAKE_C_STANDARD 99)
 
 add_library(rstring STATIC
     "include/rstring/rstring.h"
@@ -17,6 +18,12 @@ target_include_directories(rstring PUBLIC
     "include"
 )
 
+target_compile_options(rstring PRIVATE
+    "-Wall"
+    "-Wextra"
+    "-Wformat"
+    "-Werror"
+)
 enable_testing()
 add_executable(t1-simple-usage "test/t1-simple-usage.c")
 target_link_libraries(t1-simple-usage PRIVATE rstring)
