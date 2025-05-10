@@ -24,6 +24,11 @@ target_compile_options(rstring PRIVATE
     "-Wformat"
     "-Werror"
 )
+
+# Add AddressSanitizer to library
+target_compile_options(rstring PRIVATE "-fsanitize=address")
+target_link_libraries(rstring PRIVATE "-fsanitize=address")
+
 enable_testing()
 add_executable(t1-simple-usage "test/t1-simple-usage.c")
 target_link_libraries(t1-simple-usage PRIVATE rstring)
