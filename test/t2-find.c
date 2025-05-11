@@ -14,8 +14,7 @@ init_test(const char *test_name, const char *str)
 
     if (rc != RSTRING_OK)
     {
-        printf("Test '%s' failed: can't push string '%s'\n", test_name, str);
-        exit(1);
+        test_fail(test_name, "can't push string '%s'\n", str);
     }
 
     return rs;
