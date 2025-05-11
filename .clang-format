@@ -12,13 +12,15 @@ MaxEmptyLinesToKeep: 1
 # ------------------------------------------------------------------------------
 # ALIGNMENT
 # ------------------------------------------------------------------------------
-AlignAfterOpenBracket: true
+AlignAfterOpenBracket: Align
 AlignOperands: true
 AlignConsecutiveMacros: true
 AlignConsecutiveAssignments: true
 AlignConsecutiveBitFields: true
 AlignConsecutiveDeclarations: true
 AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: false
+BinPackArguments: false
 PointerAlignment: Right
 QualifierAlignment: Left
 ReferenceAlignment: Left
