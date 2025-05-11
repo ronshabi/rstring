@@ -134,7 +134,7 @@ main()
     find_first_byte_test(" aaa ", 'a', 2, 2);
     find_first_byte_test(" aaa ", 'a', 3, 3);
     find_first_byte_test(" aaa ", ' ', 3, 4);
-    find_first_byte_test(" aaa ", 'a', 50, RSTRING_NOT_FOUND);
+    find_first_byte_test(" aaa ", 'a', 16, RSTRING_NOT_FOUND);
     find_first_byte_test(" aaa ", '?', 0, RSTRING_NOT_FOUND);
 
     find_last_byte_test("", 0x00, RSTRING_NOT_FOUND);
@@ -143,6 +143,20 @@ main()
     find_last_byte_test(" abc", 'a', 1);
     find_last_byte_test(" \x80\x90\xFC\x10\x20\xFC", '\xFC', 6);
     find_last_byte_test(" \x80\x90\xFC\x10\x20\xFC", '\x20', 5);
+
+    find_first_test("", "", 0, false, 0);
+    find_first_test("", "", 0, true, 0);
+    find_first_test("", "", 1, false, RSTRING_NOT_FOUND);
+    find_first_test("", "", 1, true, RSTRING_NOT_FOUND);
+    find_first_test("a", "", 0, false, 0);
+    find_first_test("libhttp", "http", 0, false, 3);
+    find_first_test("libhttp4", "http", 0, false, 3);
+    find_first_test("libhttp4http", "http", 0, false, 3);
+    find_first_test("libhttp4http", "htTp", 0, true, 3);
+    find_first_test("libhttp4http", "???", 0, false, RSTRING_NOT_FOUND);
+    find_first_test("libhttp4http", "???", 0, true, RSTRING_NOT_FOUND);
+    find_first_test("libhttp4http", "http", 8, false, 8);
+    find_first_test("", "http", 8, false, RSTRING_NOT_FOUND);
 
     return 0;
 }
