@@ -63,43 +63,38 @@ rstring_internal_push(struct rstring *dest, const char *src, size_t n)
     return RSTRING_OK;
 }
 
-static int
-rstring_internal_compare(const char *s1, const char *s2, size_t n,
-                         bool ignore_case)
-{
-    if (ignore_case)
-    {
-        return strncasecmp(s1, s2, n);
-    }
-
-    return memcmp(s1, s2, n);
-}
-
 static size_t
 rstring_internal_find_first(const char *haystack, const char *needle,
                             size_t haystack_len, size_t needle_len, size_t from,
                             bool ignore_case)
 {
-    if (needle_len + from > haystack_len)
+    char *p = NULL;
+
+    if (needle_len > haystack_len)
     {
         return RSTRING_NOT_FOUND;
     }
 
-    if (haystack_len == 0 || needle_len == 0)
+    if (from > haystack_len - needle_len)
     {
-        return 0;
+        return RSTRING_NOT_FOUND;
     }
 
-    for (size_t i = from; i + needle_len <= haystack_len; ++i)
+    if (ignore_case)
     {
-        if (rstring_internal_compare(haystack + i, needle, needle_len,
-                                     ignore_case))
-        {
-            return i;
-        }
+        p = strcasestr(haystack + from, needle);
+    }
+    else
+    {
+        p = strstr(haystack + from, needle);
     }
 
-    return RSTRING_NOT_FOUND;
+    if (!p)
+    {
+        return RSTRING_NOT_FOUND;
+    }
+
+    return p - haystack;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -222,30 +217,48 @@ size_t
 rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
                    size_t from)
 {
-    return rstring_internal_find_first(haystack->data, needle->data,
-                                       haystack->len, needle->len, from, false);
+    return rstring_internal_find_first(haystack->data,
+                                       needle->data,
+                                       haystack->len,
+                                       needle->len,
+                                       from,
+                                       false);
 }
 
 size_t
 rstring_find_first_str(const struct rstring *haystack, const char *needle,
                        size_t from)
 {
-    return rstring_internal_find_first(haystack->data, needle, haystack->len,
-                                       strlen(needle), from, false);
+    const size_t needle_len = strlen(needle);
+    return rstring_internal_find_first(haystack->data,
+                                       needle,
+                                       haystack->len,
+                                       needle_len,
+                                       from,
+                                       false);
 }
 
 size_t
 rstring_find_first_ignore_case(const struct rstring *haystack,
                                const struct rstring *needle, size_t from)
 {
-    return rstring_internal_find_first(haystack->data, needle->data,
-                                       haystack->len, needle->len, from, true);
+    return rstring_internal_find_first(haystack->data,
+                                       needle->data,
+                                       haystack->len,
+                                       needle->len,
+                                       from,
+                                       true);
 }
 
 size_t
 rstring_find_first_str_ignore_case(const struct rstring *haystack,
                                    const char *needle, size_t from)
 {
-    return rstring_internal_find_first(haystack->data, needle, haystack->len,
-                                       strlen(needle), from, true);
+    const size_t needle_len = strlen(needle);
+    return rstring_internal_find_first(haystack->data,
+                                       needle,
+                                       haystack->len,
+                                       needle_len,
+                                       from,
+                                       true);
 }
