@@ -11,6 +11,7 @@
 
 #include <string.h>  /* strlen, memcpy */
 #include <strings.h> /* strncasecmp*/
+#include <ctype.h>   /* tolower, toupper */
 
 #include "rstring.h"
 
@@ -24,6 +25,8 @@ char _rstring_empty[1];
 /*----------------------------------------------------------------------------*/
 /* INTERNAL MACROS                                                            */
 /*----------------------------------------------------------------------------*/
+
+#define ONE_BYTE 0xFFU
 
 /*
  * Only call ensure_capacity when needed, because calling ensure_capacity
@@ -281,4 +284,22 @@ rstring_find_first_str_ignore_case(const struct rstring *haystack,
                                        needle_len,
                                        from,
                                        true);
+}
+
+/*----------------------------------------------------------------------------*/
+
+void rstring_tolower(struct rstring *rs)
+{
+    for (size_t i = 0; i < rs->len; ++i) {
+        rs->data[i] = (char) (tolower(rs->data[i]) & ONE_BYTE);
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+
+void rstring_toupper(struct rstring *rs)
+{
+    for (size_t i = 0; i < rs->len; ++i) {
+        rs->data[i] = (char) (toupper(rs->data[i]) & ONE_BYTE);
+    }
 }

@@ -390,6 +390,14 @@ rstring_is_empty(const struct rstring *rs)
 
 /*----------------------------------------------------------------------------*/
 
+void rstring_tolower(struct rstring *rs);
+
+/*----------------------------------------------------------------------------*/
+
+void rstring_toupper(struct rstring *rs);
+
+/*----------------------------------------------------------------------------*/
+
 /**
  * @brief Frees the memory which was dynamically allocated by an rstring.
  *
@@ -409,5 +417,6 @@ rstring_is_empty(const struct rstring *rs)
  */
 void
 rstring_free(struct rstring *rs);
+
 
 #endif /* RSTRING_H */
