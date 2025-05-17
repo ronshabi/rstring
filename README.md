@@ -4,7 +4,7 @@ RString is a lightweight C library providing a dynamic string data structure and
 
 > [!CAUTION]
 >
-> Library is still in alpha stage, Do **not** use this code in production.
+> As development is in an early stage, usage in production code is strongly discouraged!
 
 ### Goals
 
