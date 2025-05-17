@@ -24,7 +24,6 @@ char _rstring_empty[1];
 /*----------------------------------------------------------------------------*/
 /* INTERNAL MACROS                                                            */
 /*----------------------------------------------------------------------------*/
-#define RSTRING_INITIAL_CAPACITY 8
 
 /*
  * Only call ensure_capacity when needed, because calling ensure_capacity
@@ -62,6 +61,8 @@ rstring_internal_push(struct rstring *dest, const char *src, size_t n)
     dest->data[new_length] = '\0';
     return RSTRING_OK;
 }
+
+/*----------------------------------------------------------------------------*/
 
 static size_t
 rstring_internal_find_first(const char *haystack, const char *needle,
@@ -110,6 +111,8 @@ rstring_init(struct rstring *rs)
     _rstring_empty[0] = '\0';
 }
 
+/*----------------------------------------------------------------------------*/
+
 rstring_status_t
 rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
 {
@@ -144,11 +147,15 @@ rstring_ensure_capacity(struct rstring *rs, const size_t wanted_cap)
     return RSTRING_OK;
 }
 
+/*----------------------------------------------------------------------------*/
+
 rstring_status_t
 rstring_push(struct rstring *dest, const struct rstring *src)
 {
     return rstring_internal_push(dest, src->data, src->len);
 }
+
+/*----------------------------------------------------------------------------*/
 
 rstring_status_t
 rstring_push_byte(struct rstring *rs, uint8_t byte)
@@ -163,11 +170,15 @@ rstring_push_byte(struct rstring *rs, uint8_t byte)
     return RSTRING_OK;
 }
 
+/*----------------------------------------------------------------------------*/
+
 rstring_status_t
 rstring_push_str(struct rstring *rs, const char *str)
 {
     return rstring_internal_push(rs, str, strlen(str));
 }
+
+/*----------------------------------------------------------------------------*/
 
 void
 rstring_free(struct rstring *rs)
@@ -181,6 +192,8 @@ rstring_free(struct rstring *rs)
     rs->cap  = 0;
     rs->data = _rstring_empty;
 }
+
+/*----------------------------------------------------------------------------*/
 
 size_t
 rstring_find_last_byte(const struct rstring *rs, uint8_t byte)
@@ -213,6 +226,8 @@ rstring_find_last_byte(const struct rstring *rs, uint8_t byte)
     return RSTRING_NOT_FOUND;
 }
 
+/*----------------------------------------------------------------------------*/
+
 size_t
 rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
                    size_t from)
@@ -224,6 +239,8 @@ rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
                                        from,
                                        false);
 }
+
+/*----------------------------------------------------------------------------*/
 
 size_t
 rstring_find_first_str(const struct rstring *haystack, const char *needle,
@@ -238,6 +255,8 @@ rstring_find_first_str(const struct rstring *haystack, const char *needle,
                                        false);
 }
 
+/*----------------------------------------------------------------------------*/
+
 size_t
 rstring_find_first_ignore_case(const struct rstring *haystack,
                                const struct rstring *needle, size_t from)
@@ -249,6 +268,8 @@ rstring_find_first_ignore_case(const struct rstring *haystack,
                                        from,
                                        true);
 }
+
+/*----------------------------------------------------------------------------*/
 
 size_t
 rstring_find_first_str_ignore_case(const struct rstring *haystack,
