@@ -257,6 +257,15 @@ rstring_equals_str_ignore_case(const struct rstring *rs, const char *str)
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Finds the first occurrence of a byte in an rstring, from a given
+ * offset.
+ *
+ * @param rs Pointer to the rstring to search in.
+ * @param byte The byte value to search for.
+ * @param from The offset from |rs->data| to start the search from.
+ * @return The byte's offset from |rs->data| if found, else RSTRING_NOT_FOUND
+ */
 static inline size_t
 rstring_find_first_byte(const struct rstring *rs, uint8_t byte, size_t from)
 {
@@ -276,48 +285,103 @@ rstring_find_first_byte(const struct rstring *rs, uint8_t byte, size_t from)
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Finds the last last occurrence of a byte in an rstring.
+ *
+ * @param rs Pointer to the rstring to search in.
+ * @param byte The byte value to search for.
+ * @return The byte's offset from |rs->data| if found, else `RSTRING_NOT_FOUND`.
+ */
 size_t
 rstring_find_last_byte(const struct rstring *rs, uint8_t byte);
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Finds the first occurrence of an rstring inside another rstring, from
+ * a given offset.
+ *
+ * @param haystack Pointer to the rstring to search in.
+ * @param needle Pointer to the rstring to search for
+ * @param from The offset to start searching from.
+ * @return The offset from |rs->data| in which |needle| can be found, else
+ * `RSTRING_NOT_FOUND`.
+ */
 size_t
 rstring_find_first(const struct rstring *haystack, const struct rstring *needle,
                    size_t from);
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Finds the first occurrence of a null-terminated C string inside
+ * another rstring, from a given offset.
+ *
+ * @param haystack Pointer to the rstring to search in.
+ * @param needle Pointer to the C string to to search for.
+ * @param from The offset to start searching from.
+ * @return The offset from |rs->data| in which |needle| can be found, else
+ * `RSTRING_NOT_FOUND`.
+ */
 size_t
 rstring_find_first_str(const struct rstring *haystack, const char *needle,
                        size_t from);
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief ASCII case-insensitive variant of rstring_find_first.
+ */
 size_t
 rstring_find_first_ignore_case(const struct rstring *haystack,
                                const struct rstring *needle, size_t from);
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief ASCII case-insensitive variant of rstring_find_first_str.
+ */
 size_t
 rstring_find_first_str_ignore_case(const struct rstring *haystack,
                                    const char *needle, size_t from);
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Clears the contents of an rstring (lightweight version), resets
+ * length.
+ *
+ * This function ensures the first byte of the rstring's data is zeroed, so that
+ * other rstring (and C library) functions regard it as an empty string.
+ *
+ * In case the rstring was already an empty string, this is a no-op.
+ *
+ * @param rs Pointer to the rstring to clear.
+ */
 inline void
 rstring_clear(struct rstring *rs)
 {
     if (rs->cap)
     {
         rs->data[0] = '\0';
+        rs->len     = 0;
     }
-
-    rs->len = 0;
 }
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Checks if the rstring is an empty string.
+ *
+ * Emptyness-checking does not depend on whether the rstring is using
+ * dynamically allocated memory or is pointing to a static sentinel buffer. It
+ * depends only on the length specifier of the rstring structure, which is not
+ * violated as long as usage is through rstring library functions, and memory is
+ * not corrupted.
+ *
+ * @param rs Pointer to the rstring to check.
+ * @return `true` if the rstring is empty, false otherwise.
+ */
 inline bool
 rstring_is_empty(const struct rstring *rs)
 {
@@ -326,6 +390,23 @@ rstring_is_empty(const struct rstring *rs)
 
 /*----------------------------------------------------------------------------*/
 
+/**
+ * @brief Frees the memory which was dynamically allocated by an rstring.
+ *
+ * If the rstring isn't using memory which was dynamically allocated, this is
+ * equivalent to a no-op and is safe to use (for idiomatic reasons).
+ *
+ * Calling this function leads to resetting the length, capacity and data
+ * buffers for the rstring it was called on, as if it were to be initialized
+ * with `rstring_init`.
+ *
+ * After freeing, |rs| could be re-used given you initialize it first (this
+ * maintains API stability).
+ *
+ * If freeing allocated memory fails, the behavior is undefined.
+ *
+ * @param rs Pointer to the rstring to free.
+ */
 void
 rstring_free(struct rstring *rs);
 
