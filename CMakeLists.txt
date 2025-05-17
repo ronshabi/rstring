@@ -10,12 +10,8 @@ set(CMAKE_COLOR_MAKEFILE ON)
 set(CMAKE_C_STANDARD 99)
 
 add_library(rstring STATIC
-    "include/rstring/rstring.h"
-    "src/rstring.c"
-)
-
-target_include_directories(rstring PUBLIC
-    "include"
+    "rstring.h"
+    "rstring.c"
 )
 
 target_compile_options(rstring PRIVATE

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include <stdarg.h>
+#include "../rstring.h"
 
 // Common function every test is most likely to use
 // clang-tidy: nolint (testname and fmt are both char* arguments)

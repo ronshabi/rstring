@@ -5,8 +5,6 @@
 
 #include <stdbool.h>
 
-#include <rstring/rstring.h>
-
 #include "common.h"
 
 struct rstring

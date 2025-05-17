@@ -12,7 +12,7 @@
 #include <string.h>  /* strlen, memcpy */
 #include <strings.h> /* strncasecmp*/
 
-#include <rstring/rstring.h>
+#include "rstring.h"
 
 /*----------------------------------------------------------------------------*/
 /* STATIC BUFFERS                                                             */
