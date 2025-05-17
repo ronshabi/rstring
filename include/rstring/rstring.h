@@ -232,11 +232,6 @@ rstring_equals_str(const struct rstring *rs, const char *str)
 
 /**
  * @brief ASCII case-insensitive variant of rstring_cmp.
- *
- * @param rs1 Pointer to the first rstring.
- * @param rs2 Pointer to the second rstring.
- * @return true if the strings are equal in their lengths and contents
- * (ignoring ASCII case), false otherwise.
  */
 static inline bool
 rstring_equals_ignore_case(const struct rstring *rs1, const struct rstring *rs2)
@@ -253,11 +248,6 @@ rstring_equals_ignore_case(const struct rstring *rs1, const struct rstring *rs2)
 
 /**
  * @brief ASCII case-insensitive variant of rstring_cmp_str.
- *
- * @param rs Pointer to the rstring.
- * @param str Pointer to the null-terminated C string.
- * @return true if the strings are equal in their lengths and contents
- * (ignoring ASCII case), false otherwise.
  */
 static inline bool
 rstring_equals_str_ignore_case(const struct rstring *rs, const char *str)
